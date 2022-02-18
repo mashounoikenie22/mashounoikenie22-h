@@ -1,0 +1,67 @@
+- content_for :body do
+  #steps
+    .create
+      %span.light-blue
+        Easily Create, Target, & Direct,
+      %span
+        Fresh & Relevant Content
+
+    .publish
+      %span.light-blue
+        Quickly Publish
+      %span
+        to your Social Networks
+
+    .influence
+      %span.light-blue
+        Be instantly influential
+
+    %a{:href => twitter_auth_url, :title => 'Login with Twitter'}
+      %span.start
+
+  - content_for :optional_body do
+    #welcome.clear
+      .divider-shadow
+      / footer welcome container
+      .container
+        / footer welcome start content
+        %span.inset-type Welcome to Mashoutable™
+        %h2
+          Social Media Tools for Social Media Amplification
+        %p
+          = render 'mashout_desc'
+    - if Advertisement.current.any?
+      :javascript
+        $(function() {
+          setTimeout(function() {
+            $.fancybox({ type: 'ajax',
+                         centerOnScroll: true,
+                         speedIn: 700,
+                         href: "#{advertisement_url(Advertisement.random)}"})
+          }, 500)
+          $('#email-form').live('submit', function() {
+            if($.trim($('#advertisement_email_email').val()) == '') {
+              $('#error').show();
+              $('#error').text('Email can\'t be blank.')
+              return false;
+            }
+            $.ajax({
+              url: $(this).attr('action'),
+              type: 'POST',
+              data: $(this).serialize(),
+              dataType: 'json',
+              success: function(data) {
+                        if(data.error) {
+                          $('#error').show();
+                          $('#error').text(data.error);
+                        }
+                        else {
+                          $.get("#{signup_iframe_url}", function(data) {
+                            $.fancybox({ content: data, centerOnScroll:true })
+                          });
+                        }
+                      }
+            });
+            return false;
+          });
+        });

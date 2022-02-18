@@ -1,0 +1,3 @@
+class Mashout < Out
+end
+

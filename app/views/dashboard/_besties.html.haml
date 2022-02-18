@@ -1,0 +1,25 @@
+#besties.left
+  %span.title Best Friends and Favorite Follows
+  - if defined? @message and @message.length > 0
+    %em= @message
+  #list-people
+    %input{:id => 'bestie-editor', :type => "text"}/
+    %br/
+    %input.button.left{:id => 'add-bestie-button', :type => "submit", :value => "Add Bestie"}/
+    %input.button.right{:id => 'delete-bestie-button', :type => "submit", :value => "Delete Bestie"}/
+    :javascript
+      $(function() { bindDeleteBestieButton('#delete-bestie-button', '#bestie-editor', "#{delete_bestie_url}"); });
+      $(function() { bindAddBestieButton('#add-bestie-button', '#bestie-editor', "#{create_bestie_url}"); });
+    %ul.clear.left
+      - @besties.each do |bestie|
+        %li
+          - sanitized_screen_name = sanitize_twitter_screen_name(bestie.screen_name)
+          - real_screen_name = '@' << bestie.screen_name
+          %a.left{:id => "#{sanitized_screen_name}", :href => "#"}= real_screen_name
+          %img{:alt => "avatar", :src => bestie.profile_image_url, :width => "32", :height => "32"}/
+          :javascript
+            $(function() { bindUpdateBestieEditor("##{sanitized_screen_name}", '#bestie-editor', "#{real_screen_name}") });
+  = will_paginate @besties, :previous_label => "Previous", :next_label => "Next", :inner_window => 0, :outer_window => -1
+  :javascript
+    $(function() { ajaxifyPagination("#besties", "#{dashboard_besties_url}"); });
+

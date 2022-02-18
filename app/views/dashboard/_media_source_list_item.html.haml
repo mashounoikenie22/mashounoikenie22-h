@@ -1,0 +1,12 @@
+.span-15.box
+  .list.left
+    %span.number.left.clear= "#{item_number}."
+    %span.list-item
+      %span
+        Add
+        = succeed "?" do
+          %span.orange Media
+        (or
+        = "#{item_number + 1})"
+  = render 'media_source'
+

@@ -1,0 +1,25 @@
+.target-content.clear
+  .append-bottom
+    - retweet_parent = "mashout-retweet-#{retweet[:status_id]}"
+    %input.span-1{:id => "#{retweet_parent}", :name => "#{retweet_parent}", :type => 'checkbox', :class => 'target-checkbox'}
+    :javascript
+      $(function() { bindMashoutMasterTargetToChildTargets("#{retweet_parent}"); });
+    %em
+      %label.span-7.append-bottom{:for => "#{retweet_parent}"}= retweet[:text]
+    .span-7.prepend-1
+      - if retweet[:users].any?
+        %input{:id => "hidden-retweet-targets-#{retweet[:status_id]}", :name => "hidden-retweet-targets-#{retweet[:status_id]}", :type => 'hidden'}
+        - retweet[:users].each do |user|
+          - sanitized_screen_name = sanitize_twitter_screen_name(user[:screen_name])
+          - retweeter_id = "mashout-retweet-#{retweet_parent}-#{sanitized_screen_name}"
+          /%input{:id => retweeter_id, :name => "mashout-targets[]", :type => 'checkbox', :value=> "#{user[:screen_name]}", :class => "#{retweet_parent} target-checkbox"}
+          %input{:id => retweeter_id, :name => "mashout-retweet-targets[#{retweet[:status_id]}][]", :type => 'checkbox', :value => "#{user[:screen_name]}", :class => "#{retweet_parent} target-checkbox"}
+          %label{:for => retweeter_id}= user[:screen_name]
+          %img.right{:src => user[:profile_image_url], :style => 'width:45px; height:45px;'}
+          :javascript
+            $(function() {
+              bindDynamicPreviewTargetChange("##{retweeter_id}", "#hidden-retweet-targets-#{retweet[:status_id]}", '#out-preview', "#{retweet_parent}");
+              bindDynamicPreviewTargetChange("##{retweeter_id}", "#hidden-retweet-targets-#{retweet[:status_id]}", '#out-preview', 'target-checkbox');
+            });
+      - else
+        You have already replied to everyone who retweeted this tweet.

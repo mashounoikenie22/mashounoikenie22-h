@@ -1,0 +1,133 @@
+#mashout-target-container
+  .help.clear
+    %span.icon
+    %p.message Pick your target audience
+  #mashout-target-audience-container.span-9.left.ui-combobox
+    %select{:id => 'mashout-target-selection', :name => 'mashout-target-selection', :style => "display: none;"}
+      %option{:value => "NONE"} None
+      %option{:value => "TWEOPLE"} Tweople (Twitter Users who are likely online NOW)
+      %option{:value => "FOLLOWER"} Follower Tweeps (Twitter Users Following Me)
+      %option{:value => "FOLLOWED_BY_I_FOLLOW"} Tweeps (I follow/Am followed by)
+      %option{:value => "I_FOLLOW"} I Follow (Tweople who haven't reciprocated...YET)
+      %option{:value => "TODAYS_MENTIONS"} Today's @Mentions
+      %option{:value => "TODAYS_RTS"} Today's #RT's (Your Tweets retweeted)
+      %option{:value => "BESTIES"} Your Twitter Besties
+      %option{:value => "CELEB_VERIFIED"} Celeb/Verified Accounts
+    :javascript
+      $(function() { bindDynamicPreviewAutoCompleteSelectAndHandleTarget('#mashout-target-audience-container', '#mashout-target-selection', '#hidden-targets', '#out-preview'); });
+  - if defined? @target and @target == 'TWEOPLE'
+    .help.clear
+      %span.icon
+      %p.message Pick the source of your audience
+    #mashout-target-tweople-container.span-9.left.ui-combobox
+      %select{:id => 'mashout-target-tweople-source-selection', :name => 'target-tweople-source', :style => "display: none;"}
+        %option{:value => 'TWEOPLE_WEB_ONLY'} Web Only
+        %option{:value => 'TWEOPLE_ALL_SOURCES'} All Sources
+      :javascript
+        $(function() { bindDynamicPreviewAutoCompleteSelectAndHandleTarget('#mashout-target-tweople-container', '#mashout-target-tweople-source-selection', '#hidden-targets', '#out-preview'); });
+        $(function() { bindTargetAutoCompleteSelectAndHandle('#mashout-target-tweople-container', '#mashout-target-tweople-source-selection', "#{target_source_url}"); });
+  .prepend-6.span-9.left
+    - if defined? @targets
+      #target-tweet-list
+      - if not @targets.nil? and @targets.count > 0
+        #mashout-target-checkboxes
+          %br/
+          %input{:type => 'checkbox', :id => 'target-checkbox', :class => 'left clear'}
+          %label{:for => 'target-checkbox'}
+            All Targets
+          :javascript
+            $(function() { bindMashoutMasterTargetToChildTargets('target-checkbox') })
+          - @targets.each do |key, statuses|
+            - first_target = statuses.shift
+            .target-content.clear
+              - if not first_target.nil?
+                - sanitized_screen_name = sanitize_twitter_screen_name(first_target[:screen_name])
+                .append-bottom
+                  %input{:id => "mashout-target-#{sanitized_screen_name}", :name => "mashout-target-#{sanitized_screen_name}", :type => 'checkbox', :class => 'target-checkbox'}
+                  %label{:for => "mashout-target-#{sanitized_screen_name}"}= first_target[:screen_name]
+                  %img{:src => first_target[:profile_image_url], :style => 'width:45px; height:45px;'}
+                  :javascript
+                    $(function() { bindMashoutMasterTargetToChildTargets("mashout-target-#{sanitized_screen_name}"); });
+                = render 'target_tweets', :target => first_target, :sanitized_screen_name => sanitized_screen_name
+              - if statuses.count > 0
+                .span-6.prepend-1
+                  - target_tweets_toggle_id = "target-tweets-toggle-#{sanitized_screen_name}"
+                  - target_tweets_slider_id = "target-tweets-slider-#{sanitized_screen_name}"
+                  %p
+                    %em
+                      %a{:href => '#', :id => target_tweets_toggle_id}= pluralize(statuses.count, 'more tweet') << '...'
+
+                :javascript
+                  $(function() { bindMashoutShowMoreTweets("##{target_tweets_toggle_id}", "##{target_tweets_slider_id}"); });
+                %div{:id => target_tweets_slider_id, :style => 'display:none;'}
+                  - statuses.each do |target|
+                    = render 'target_tweets', :target => target, :sanitized_screen_name => sanitized_screen_name
+        - elsif not @profiles.nil? and @profiles.count > 0
+          #mashout-target-checkboxes
+            %br/
+            %input{:type => 'checkbox', :id => 'target-checkbox', :class => 'left clear'}
+            %label{:for => 'target-checkbox'}
+              All Targets
+            :javascript
+              $(function() { bindMashoutMasterTargetToChildTargets('target-checkbox') })
+            - @profiles.each do |profile|
+              - sanitized_screen_name = sanitize_twitter_screen_name(profile[:screen_name])
+              - profile_container_id = "mashout-profile-#{sanitized_screen_name}-container"
+              .target-content.clear{:id => profile_container_id}
+                .append-bottom
+                  - profile_id = "mashout-profile-#{sanitized_screen_name}"
+                  %input{:id => profile_id, :name => "mashout-targets[]", :type => 'checkbox', :value => "#{profile[:screen_name]}", :class => "mashout-target-#{sanitized_screen_name} target-checkbox"}
+                  %label{:for => profile_id}= profile[:screen_name]
+                  %img{:src => profile[:profile_image_url], :style => 'width:45px; height:45px;'}
+                  :javascript
+                    $(function() { bindDynamicPreviewTargetChange("##{profile_id}", '#hidden-targets', '#out-preview', 'target-checkbox'); });
+                .span-6.prepend-1
+                  %p
+                    - if profile[:description].present?
+                      %p
+                        %em= profile[:description]
+                    -if profile[:location].present?
+                      = profile[:location]
+                      %br
+                    -if profile[:url].present?
+                      %a{:href => profile[:url], :target => '_blank'}= profile[:url]
+                      %br
+                    -if profile[:last_tweet_from] and (defined? @tweople_target) and @tweople_target.present?
+                      != "Just Tweeted from #{profile[:last_tweet_from].casecmp('web') == 0 ? 'the Web' : profile[:last_tweet_from]}"
+                      %br
+                    - if @target == 'I_FOLLOW' || @target == 'FOLLOWER'
+                      %hr.space
+                      - form_id = "mashout-#{sanitized_screen_name}-form"
+                      - if @target == 'FOLLOWER'
+                        - if profile[:follow_request_sent]
+                          %input.button.span-2{:type => :submit, :value => 'Follow', :disabled => 'disabled'}
+                          %span.span-4
+                            = "You've already requested to follow #{profile[:screen_name].from(1)}."
+                        - else
+                          = form_for Friend.new, :url => user_friends_url, :html => { :id => form_id } do |f|
+                            = f.hidden_field :twitter_user_id, :value => profile[:twitter_id]
+                            = f.submit 'Follow', :class => %w(button span-2)
+                          %span.span-4
+                          :javascript
+                            $(function() { bindFollowForm("##{form_id}", "##{profile_container_id}"); });
+                      - else
+                        %input.button.left{:type => :submit, :id => form_id, :value => 'Unfollow'}
+                        %span.span-4
+                        :javascript
+                          $(function() { bindUnfollowButton("##{form_id}", "##{profile_container_id}", "#{user_friend_url(profile[:local_friend_id])}"); });
+
+        - elsif not @retweets.nil? and @retweets.count > 0
+          #mashout-target-checkboxes
+            %br/
+            %input{:type => 'checkbox', :id => 'target-checkbox', :class => 'left clear'}
+            %label{:for => 'target-checkbox'}
+              All Targets
+            :javascript
+              $(function() { bindMashoutMasterTargetToChildTargets('target-checkbox') })
+            = render :partial => 'target_retweet', :collection => @retweets, :as => 'retweet'
+        - elsif defined? @target and @target != 'NONE'
+          %p Nothing was found
+    %input{:id => 'hidden-targets', :type => 'hidden', :value => ''}
+  :javascript
+    $(function() { bindTargetAutoCompleteSelectAndHandle('#mashout-target-audience-container', '#mashout-target-selection', "#{target_source_url}"); });
+

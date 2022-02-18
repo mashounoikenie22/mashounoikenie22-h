@@ -1,0 +1,7 @@
+%li{:class => media_source[:name].downcase.gsub(' ', '-') }
+  %span.icon
+    %span.overlay
+    %img{:src => "#{asset_path('media-icons/' + media_source[:image])}", :alt => media_source[:name], :title => media_source[:name]}
+  = "@#{media_source[:name]}"
+  - media_checkbox_id = "mashout-media-#{sanitize_twitter_screen_name(media_source[:screen_name])}"
+  %input{:id => media_checkbox_id, :type => 'checkbox', :name => 'mashout-media[]', :value => "#{URI.encode(media_source[:screen_name])}"}

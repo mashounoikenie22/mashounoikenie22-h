@@ -1,0 +1,160 @@
+!!!
+%html
+  %head
+    %meta{:content => "text/html; charset=UTF-8", "http-equiv" => "Content-Type"}
+    %link{:href => "http://mashout.greanetree.com/favicon.png", :rel => "icon", :type => "image/png"}
+    - if content_for?(:optional_meta)
+      %meta{:name => 'description', :content => 'Check out the latest social media tools and social media services available to boost your media from Mashoutable.com.'}
+    - else
+      = yield :optional_meta
+    - if content_for?(:optional_meta_title)
+      = yield :optional_meta_title
+    - else
+      %title Social Media Tools | Social Media Services | Mashoutable.com
+    %meta{:content => "index,follow,noydir,noodp", :name => "robots"}/
+    = stylesheet_link_tag     'application', :media => 'all'
+    = stylesheet_link_tag     'application-print', :media => 'print'
+    = yield :optional_css
+    /[if IE]
+      = stylesheet_link_tag   'application-ie', :media => 'all'
+      = stylesheet_link_tag   'ie', :media => 'all'
+    /[if IE 7]
+      = stylesheet_link_tag   'ie7', :media => 'all'
+    = javascript_include_tag  'application'
+    = yield :optional_javascript
+    = csrf_meta_tags
+  %body
+    / body wrapper
+    #wrapper
+      / feedback floater
+      %a#feedback{:href => contact_us_url, :style => "margin-top: 0px;", :title => 'Give us some Feedback'} Feedback
+      / container
+      .container.content.clear{:class => home? ? 'home' : nil}
+        / top section
+        #top.clear
+          / top-black bar
+          %p#top-bar.clear Mashoutable™: Tools to Amplify Your Social Media Development
+          / header
+          #header
+            / header logo
+            #logo.left
+              %a{:href => root_url, :title => 'Mashoutable.com'}
+                %img{:alt => "Mashoutable", :src => "#{asset_path('logo.png')}", :alt => 'Image of Mashoutable logo'}
+            / navigation and time savings
+            #navigation-social.right.last
+              = render 'shared/login'
+              / navigation
+              #h-navigation
+                %ul.right.last.clear
+                  = render 'shared/navigation_link', :href => "#{root_url}", :title => 'Home', :controller_name => 'content', :action_name => 'home', :name => 'Home'
+                  = render 'shared/navigation_link', :href => "#{dashboard_url}", :title => 'Mashoutable Tools', :controller_name => 'dashboard', :name => 'Tools'
+                  = render 'shared/navigation_link', :href => "#{about_us_url}", :title => 'About us', :controller_name => 'content', :action_name => 'about_us', :name => 'About Us'
+                  = render 'shared/navigation_link', :href => "#{blog_url}", :title => 'Blog', :controller_name => 'content', :action_name => 'blog', :name => 'Blog'
+                  = render 'shared/navigation_link', :href => "#{contact_us_url}", :title => 'Contact us', :controller_name => 'content', :action_name => 'contact_us', :name => 'Contact Us'
+            %hr.space
+          - if flash[:notice]
+            %p.notice= flash[:notice]
+          - if flash[:error]
+            %p.error= flash[:error]
+          - if flash[:success]
+            %p.success= flash[:success]
+          %noscript
+            %p.error You need javascript for this site to function properly
+          = yield :body
+    = yield :optional_body
+    / footer wrapper
+    #footer.clear
+      #blog-twitter
+        #footer-divider.clear
+        / footer container
+        .container
+          / footer blog section
+          #blog.left
+            %span.title.left From the Blog:
+            / footer first blog item
+            .entry.clear
+              .left.blog-date
+                %span.day 25
+                %span.month APR
+              .left.blog-desc.span-6
+                %span.title
+                  =truncate("The Tweople Target", :length => 25)
+                %span.category Posted in Twitter, Tweet...
+                %p
+                  =truncate('The "Tweople" target at Mashoutable.com is a little gem in itself. Algorithmic process here behind the scenes, ensures a couple of things for you, first, ALL these folks have Tweeted inside the last 4 minutes, second, you can filter these for "Web Only"', :length => 130)
+                  %br/
+                  %br/
+                  %a{:href => blog_url + "#post-2", :title => 'The Tweople Target'} Read More
+            / footer second blog item
+            .entry.left
+              .left.blog-date
+                %span.day 05
+                %span.month SEP
+              .left.blog-desc.span-6
+                %span.title
+                  =truncate("Mashoutable™ Social Media!", :length => 25)
+                %span.category Posted in Uncategorized
+                %p
+                  =truncate("Welcome to Mashoutable™!  We enhance and simplify the Social Media User’s ability to discover, engage, and interact across the Social Web.", :length => 130)
+                  %br/
+                  %br/
+                  %a{:href => blog_url + "#post-1", :title => 'Mashoutable Social Media'} Read More
+          / footer twitter section
+          #twitter.right.last
+            %span.title.left Twitter:
+            .left
+              .tweet
+              .twitter-bird.right
+                %span.icon
+      / footer back to top icon
+      #back-to-top.clear
+        .container
+          .right.last
+            %a{:href => "#top", :title => 'Back to top'}
+              %img{:alt => "Back To Top", :src => "#{asset_path('footer-back-to-top.png')}", :alt => 'Back to top image'}
+      / footer bottom bar wrapper
+      #navigation-copyright.clear
+        / footer bottom bar container
+        .container
+          / footer bottom bar navigation, privacy policy and terms
+          .left
+            #f-navigation.left
+              %ul
+                %li
+                  %a{:href => root_url, :title => 'Home'} Home
+                %li
+                  %a{:href => dashboard_url, :title => 'Mashoutable tools'} Tools
+                %li
+                  %a{:href => about_us_url, :title => 'About us'} About Us
+                %li
+                  %a{:href => blog_url, :title => 'Blog'} Blog
+                %li
+                  %a{:href => contact_us_url, :title => 'Contact us'} Contact Us
+            #policies.clear.left
+              %a{:href => privacy_policy_url,:title => 'Privacy policy'} Privacy Policy
+              &bull;
+              %a{:href => terms_and_conditions_url, :title => 'Terms and conditions'} Terms and Conditions
+          .right
+            / footer, bottom bar, copyright notice, and social media icons
+            #copyright.right.last
+              %a.facebook{:href => "http://www.facebook.com/mashoutable", :target => "_blank", :title => 'Mashoutable Facebook'}
+                %span.icon.left
+              %a.twitter{:href => "http://www.twitter.com/mashoutable", :target => "_blank", :title => 'Mashoutable Twitter'}
+                %span.icon.left
+              %span.left &copy; Copyright 2011-2012 Mashoutable.com
+            #browser-support.right.last.clear
+              %span.left
+                Supported Browsers:
+              %span.firefox
+                %span.icon.left
+              %span.chrome
+                %span.icon.left
+              %span.ie
+                %span.icon.left
+              %span.safari
+                %span.icon.left
+              %span.rockmelt
+                %span.icon.left
+    - if Rails.env.production?
+      = render 'shared/google_analytics'
+

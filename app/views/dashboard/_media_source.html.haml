@@ -1,0 +1,31 @@
+#media-icons.span-15.left.clear
+  %span
+    Influential Targets
+  %ul.left
+    = render :partial => 'media_source_icon', :collection => media_sources.take(4), :as => 'media_source'
+  %ul#hidden-media-icons.left.hidden
+    = render :partial => 'media_source_icon', :collection => media_sources[4...media_sources.count], :as => 'media_source', :locals => { :hidden => true }
+  %a{:id => 'more-media', :href => '#', :class => 'right'}
+    Show More
+  %a{:id => 'less-media', :href => '#', :class => 'hidden right clear'}
+    Show Less
+  %input{:id => 'hidden-media', :type => 'hidden', :value => ''}/
+  :javascript
+    bindMediaIconToggle()
+    $(function() {
+      $('#more-media').click(function(e) {
+        e.preventDefault()
+        $(this).hide()
+        $('#hidden-media-icons').slideDown(500, function() {
+          $('#less-media').show()
+        })
+      })
+      $('#less-media').click(function(e) {
+        e.preventDefault()
+        $('#hidden-media-icons').slideUp(500, function() {
+          $('#less-media').hide()
+          $('#more-media').show()
+        })
+      })
+    })
+

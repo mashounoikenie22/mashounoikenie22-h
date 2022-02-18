@@ -1,0 +1,9 @@
+- if current_user.nil?
+  / social media sign in
+  #social-media.right.last
+    %a{:href => twitter_auth_url}
+      %span#navigation-sign-in-twitter.left
+    %a{:href => facebook_auth_url}
+      %span#navigation-sign-in-facebook.left
+- else
+

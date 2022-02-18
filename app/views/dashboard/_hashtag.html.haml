@@ -1,0 +1,38 @@
+- hashtag_text = hashtag.tag.gsub('#', '').gsub(/[^\w]/, '').downcase
+%ul{:id => "mashout-#{hashtag_text}-hashtag-container", :class => 'left'}
+  %li
+    %input{:id => "mashout-#{hashtag_text}-hashtag", :name => "mashout-hashtag[]", :type => "checkbox", :value => hashtag.tag, :checked => (defined?(checked) and checked) ? 'checked' : nil}
+    %label{:id => "mashout-#{hashtag_text}-hashtag-label", :for => "mashout-#{hashtag_text}-hashtag"}
+      = hashtag.tag
+    %input{:id => "mashout-#{hashtag_text}-hashtag-text", :type => 'text', :value => defined?(new_tag) ? new_tag : hashtag.tag, :class => 'left hidden'}
+  %li.actions
+    %a{:id => "mashout-#{hashtag_text}-hashtag-edit", :href => '#', :title => 'Edit', :onclick => 'return false;', :class => 'left edit'}
+      %span.icon
+    %a{:id => "mashout-#{hashtag_text}-hashtag-confirm", :href => '#', :title => 'Confirm', :onclick => 'return false;', :class => 'left hidden confirm'}
+      %span.icon
+    %a{:id => "mashout-#{hashtag_text}-hashtag-cancel", :href => '#', :title => 'Cancel', :onclick => 'return false;', :class => 'left hidden cancel'}
+      %span.icon
+    = link_to user_hashtag_url(hashtag), :id => "mashout-#{hashtag_text}-hashtag-delete", :class => 'left delete', :title => 'Delete' do
+      %span.icon
+    :javascript
+      $(function() {
+        var hashtagId = "#mashout-#{hashtag_text}-hashtag"
+        bindDynamicPreviewCheckboxClick(hashtagId, '#hidden-hashtags', '#out-preview');
+        inlineEdit(hashtagId, "#{user_hashtag_url(hashtag)}")
+      })
+    - if hashtag.errors.any?
+      :javascript
+        $(function() {
+          makeHashtagEditable("#mashout-#{hashtag_text}-hashtag")
+        })
+    - if defined?(checked) and checked
+      :javascript
+        $(function() {
+          generateOutFragment("#{hashtag.tag}", '#hidden-hashtags', '#out-preview')
+          generateDynamicOutPreview('#out-preview')
+        })
+  - if hashtag.errors.any?
+    %p.left.clear
+      = hashtag.errors.full_messages.to_sentence
+
+

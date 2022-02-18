@@ -1,0 +1,19 @@
+- if @networks[:twitter].blank?
+  %a{:id => 'twitter-auth-button', :href => '#twitter-auth'}
+    %input.left{:id => 'toggle-twitter', :value => '', :type => 'submit'}
+  %div{:style => 'display:none;'}
+    #twitter-auth
+      - if defined? oops and oops == false
+        Just this once you'll need to
+      - else
+        Oops, just this once you'll need to
+      %a{:href => twitter_auth_url}
+        %span.prepend-top#sign-in-twitter
+  :javascript
+    $(function() { $('#twitter-auth-button').fancybox(); });
+- else
+  %input.left{:id => 'toggle-twitter', :value => '', :type => 'submit'}
+  :javascript
+    $(function() { enableNetworkButton('#toggle-twitter', true); });
+    $(function() { bindNetworkToggleButton('#toggle-twitter', '#mashout-network-twitter'); });
+

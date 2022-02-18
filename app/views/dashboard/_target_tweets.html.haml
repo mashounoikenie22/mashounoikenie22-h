@@ -1,0 +1,14 @@
+.span-6.prepend-1
+  %input{:id => "mashout-target-#{target[:status_id]}", :name => "mashout-targets[]", :type => 'checkbox', :value => "#{target[:screen_name]}", :class => "mashout-target-#{sanitized_screen_name} target-checkbox"}
+  %input{:id => "mashout-reply-#{target[:status_id]}", :name => "mashout-replies[]", :type => 'checkbox', :value => "#{target[:status_id]}", :style => 'display:none;', :class => 'target-checkbox'}
+  %input{:id => "hidden-#{target[:status_id]}", :name => "hidden-targets[]", :type => 'checkbox', :value => "#{target[:screen_name]}", :style => 'display:none;'}
+  :javascript
+    $(function() { bindMashoutTargetToReply("#mashout-target-#{target[:status_id]}", "#mashout-reply-#{target[:status_id]}"); });
+    $(function() { bindMashoutTargetToReply("#mashout-target-#{sanitized_screen_name}", "#mashout-reply-#{target[:status_id]}"); });
+    $(function() { bindDynamicPreviewTargetChange("#mashout-target-#{target[:status_id]}", '#hidden-targets', '#out-preview', "mashout-target-#{sanitized_screen_name}"); });
+    $(function() { bindDynamicPreviewTargetChange("#mashout-target-#{target[:status_id]}", '#hidden-targets', '#out-preview', 'target-checkbox'); });
+  != target[:text]
+  %br/
+  %em!= "(" + distance_of_time_in_words_to_now(target[:created_at], true) + " ago from " + target[:source] + ")"
+  %hr.space/
+

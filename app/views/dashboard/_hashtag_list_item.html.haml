@@ -1,0 +1,26 @@
+.span-15.box
+  .left.list
+    %span.number.left.clear= "#{item_number}."
+    %span.list-item
+      %span
+        Add a
+        = succeed "?" do
+          %span.orange Hashtag
+        (or
+        = "#{item_number + 1})"
+    %br/
+  #mashout-hashtag
+    .help.clear
+      %span.icon
+      %p.message We make it easy to get out to more people. Choose as many tags as you like!
+    #mashout-hashtag-checkboxes.span-13.left
+      %input{:type => 'hidden', :id => 'hidden-hashtags', :name => 'hidden-hashtags'}/
+      = render :partial => 'hashtag', :collection => hashtags, :as => 'hashtag'
+      %a{:id => 'new-hashtag', :href => '#', :class => 'clear left'}
+        Add Hashtag
+      :javascript
+        $(function() {
+          initializeNewHashtagListeners("#{new_user_hashtag_url}","#{user_hashtags_url}")
+        })
+    %hr.space/
+

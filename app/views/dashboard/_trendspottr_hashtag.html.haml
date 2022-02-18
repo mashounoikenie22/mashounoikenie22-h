@@ -1,0 +1,9 @@
+- id = "mashout-trend-hashtag-#{trend_counter}"
+%li
+  %input{:id => id, :name => "mashout-trendspottr-trends[]", :type => "checkbox", :value => "#{URI.encode(trend[:value])}"}
+  %label{:for => id}
+    = trend[:name] << ' (%.2f)' % trend[:weight]
+  = render :partial => 'trendspot_button', :locals => { :checkbox_id => id }
+  :javascript
+    $(function() { bindDynamicPreviewCheckboxClick("##{id}", '#hidden-trendspottr-trends', '#out-preview'); });
+

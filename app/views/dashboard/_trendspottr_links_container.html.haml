@@ -1,0 +1,8 @@
+= render :partial => 'trendspottr_header', :locals => { :trend_type => 'Links' }
+%ul.left
+  = render :partial => 'trendspottr_link', :collection => trends, :as => 'trend'
+  - if trends.any?
+    :javascript
+      $(function() { $('.fancybox').fancybox({ width: 1036, height: 768, centerOnScroll: true }) })
+%hr.space
+

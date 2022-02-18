@@ -1,0 +1,31 @@
+- content_for :content_body do
+  = form_tag blastout_create_url, :id => 'mashout-form' do
+    .span-15.box
+      .left.list
+        %span.number.left.clear  1.
+        %span.list-item
+          %span
+            Add a
+            = succeed "?" do
+              %span.orange Video
+            (or 2)
+      #mashout-video
+        .help.clear
+          %span.icon
+          %p.message Click Record, we'll auto stop (counting down from 60 seconds), save, assign a shortened URL, and add it to your Video Library, OR stop it manually when you're ready, then click save...
+        .span-9.left
+          = render 'nimbb_recorder'
+        %hr.space
+      .help.clear
+        %span.icon
+        %p.message Mashoutable Video Library
+      = render 'blastout_videos'
+    = render 'target_list_item', :item_number => 2
+    = render 'hashtag_list_item', :item_number => 3, :hashtags => @hashtags
+    = render 'trend_list_item', :item_number => 4
+    = render 'comment_list_item', :item_number => 5
+    = render 'hidden_out'
+
+- content_for :out do
+  = render "out", :form_path => blastout_create_url
+

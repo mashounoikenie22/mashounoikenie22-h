@@ -1,0 +1,24 @@
+cache_verified_twitter_users:
+  every: 3hs
+  class: CacheVerifiedTwitterUser
+  description: 'Fetch and store verified twitter users'
+
+cache_trendspottr_trends:
+  every: 1hs
+  class: CacheTrendspottrPopularTrends
+  description: 'Fetch and store Trendspottr popular topics and searches'
+
+generate_daily_reports:
+  cron: '0 0 * * * America/New_York'
+  class: GenerateDailyReports
+  description: 'Generate provider / out reports for yesterday and email them.'
+
+generate_weekly_reports:
+  cron: '0 0 * * Mon America/New_York'
+  class: GenerateWeeklyReports
+  description: 'Generate reports for the past week and email them.'
+
+generate_monthly_reports:
+  cron: '0 0 1 * * America/New_York'
+  class: GenerateMonthlyReports
+  description: 'Generate reports for the past month and email them.'

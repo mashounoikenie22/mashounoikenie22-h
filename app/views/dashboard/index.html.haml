@@ -1,0 +1,72 @@
+- content_for :content_body do
+  / content section
+  #tools.left.clear
+    .button.left
+      %span.left.mashout.inset-type
+        %a{:href => "#{dashboard_mashout_url}"}
+          %span.tool-orange
+            &#35;Targeted
+          MASHOUT&#8482;
+    .button.left
+      %span.left.blastout.inset-type
+        %a{:href => "#{dashboard_blastout_url}"}
+          %span.blue
+            &#35;Video
+          BLASTOUT&#8482;
+    .button.left
+      %span.left.shoutout.inset-type
+        %a{:href => "#{dashboard_shoutout_url}"}
+          %span.green
+            &#35;Top Trend
+          SHOUTOUT&#8482;
+    .button.left
+      .in-development
+      %span.left.pickout.inset-type
+        %a{:href => pickout_url}
+          %span.red
+            &#35;Credible Winner
+          PICKOUT&#8482;
+    .button.left
+      .in-development
+      %span.left.lookout.inset-type
+        %a{:href => "#", :onclick => 'return false'}
+          %span.tool-orange
+            &#35;Lookout
+          LOOKOUT&#8482;
+    .button.left
+      %span.left.coming-soon.inset-type
+        %a{:href => "#", :onclick => 'return false'} &#35;COMING SOON
+  #dropdown-buttons.left.clear
+    .button.left
+      .soon
+      %span.left.inset-type
+        %a{:href => "#", :id => "pickouts", :onclick => 'return false'} MY PICKOUTS
+    .button.left
+      .soon
+      %span.left.inset-type
+        %a{:href => "#", :id => "analytics", :onclick => 'return false'} OUT.AM ANALYTICS
+    .button.left
+      %span.left.inset-type
+        %a{:href => "#", :id => "networks"} CONNECTED NETWORKS
+    .pickouts.clear.hidden.left
+      %span My Pickouts
+      %p
+        Comming Soon!
+    .analytics.clear.hidden.left
+      %span OUT.AM Analytics
+      %p
+        Comming Soon!
+    .networks.clear.hidden.left
+      %span.left Connected Networks
+      = render 'connected_networks'
+      .description.left
+        %span.network-arrow.left
+        %p.right
+          Click the favicons to connect/disconnect your Social Networks
+  #extra-info.left
+    = render 'besties'
+    = render 'dashboard_videos'
+    = render 'interactions'
+  :javascript
+    bindSettingsPanelButton('networks');
+

@@ -1,0 +1,16 @@
+.ui-button { margin-left: -1px; width: 28px !important; height: 27px; margin-top: 3px; border: 0 !important; }
+.ui-button-icon-only .ui-button-text { padding: 0.35em; }
+.ui-autocomplete-input { margin: 0; padding: 0.48em 0 0.47em 0.45em; font-weight: normal; cursor: pointer; }
+.ui-autocomplete-input:focus { cursor: pointer !important;}
+.ui-button.ui-state-hover {background: #F86516 url(ui-bg_inset-soft_20_f86516_1x100.png) 50% 50% repeat-x !important; }
+.ui-menu { z-index: 15 !important; }
+.ui-autocomplete {
+		max-height: 250px;
+		overflow-y: auto;
+		overflow-x: hidden;
+		cursor: pointer; }
+
+.ui-autocomplete a {
+		text-align: left;
+		cursor: pointer; }
+

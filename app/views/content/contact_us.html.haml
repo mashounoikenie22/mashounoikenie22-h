@@ -1,0 +1,61 @@
+- content_for :optional_meta_title do
+  %title Contact Mashoutable | Mashoutable.com
+
+- content_for :optional_meta do
+  %meta{:name => 'keywords', :content=> 'Contact Mashoutable'}
+  %meta{:name => 'description', :content => 'Contact Mashoutable with any and all of your questions and concerns. We are here to help you!'}
+
+- content_for :title do
+  .prepend-top
+    .left
+      %h1.inset-type Contact Us
+
+- content_for :content_body do
+  .span-13.box.left
+    = form_for @message, :url => contact_us_message_path do |form|
+      = form.label :name
+      = form.text_field :name, :class => 'span-10'
+      = form.label :email, :class => 'clear'
+      = form.text_field :email, :class => 'span-10'
+      = form.label :subject, :class => 'clear'
+      = form.text_field :subject, :class => 'span-10'
+      = form.label :body, :class => 'clear'
+      = form.text_area :body, :cols => nil, :class => 'left span-10'
+      %div{:class => 'span-12 align-right'}
+        %input.button{:type => 'submit', :value => 'Send'}
+
+  .span-9.box.right
+    %span.left.span-9
+      %label Toll Free:
+      (855) MASHOUT
+    %span.clear.left.span-9
+      %label Email:
+      Contact@Mashoutable.info
+    %span.clear.left.span-9
+      %label.mail Snail Mail:
+      Mashoutable&trade;
+      %br/
+      113 Barksdale Professional Center
+      %br/
+      Newark, DE 19711
+
+  .span-9.box.bottom
+    Do you have questions about how Mashoutable's
+    %a{:href => root_url, :title => "Mashoutable's social media services"} social media services
+    and tools can help you in your personal or professional life?  Don’t know where to start?  Don’t be frightened by new mediums of marketing and social media - we can help you.
+    %br/
+    %br/
+    Mashoutable will help you save time while getting your message out quickly and easily to all of your followers or just a targeted few with our tools including
+    %a{:href => mashout_url, :title => 'Targeted mashout'} Targeted MASHOUT,
+    %a{:href => blastout_url, :title => 'Video blastout'} Video BLASTOUT
+    and
+    %a{:href => shoutout_url, :title => 'Top trend shoutout'} Top Trent SHOUTOUT.
+    To learn more about Mashoutable and how our tools were born, see our
+    %a{:href => about_us_url, :title => 'About Mashoutable'} About Mashoutable
+    section.
+    %br/
+    %br/
+    Please fill out the fields to the left with any questions, comments or concerns regard what you can do with Mashoutable’s
+    %a{:href => root_url, :title => 'More about social media tools'} social media tools.
+    We are eager to hear from you.
+

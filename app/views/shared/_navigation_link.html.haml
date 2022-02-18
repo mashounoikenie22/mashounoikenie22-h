@@ -1,0 +1,8 @@
+- if (params[:controller] == controller_name and (action_name.nil? ? true : params[:action] == action_name))
+  %li.active
+    %a.active{:href => href} 
+      = name
+- else
+  %li
+    %a{:href => href} 
+      = name

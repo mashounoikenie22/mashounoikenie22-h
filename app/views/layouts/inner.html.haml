@@ -1,0 +1,20 @@
+- content_for :body do
+  #content-wrapper.clear.span-24{:class => large_content? ? 'span-all' : nil}
+    / left content box
+    - conditional_div(!large_content?, {:id => 'main-content', :class => 'left'}) do
+      #content-top.clear
+      #content-body.left
+        / start content
+        #content-inner.span-15
+          / content title
+          #title
+            = yield :title
+          / content section
+          = yield :content_body
+      #content-bottom.clear
+      %hr.space/
+    - if !large_content?
+      = yield :out
+
+= render :template => 'layouts/application'
+

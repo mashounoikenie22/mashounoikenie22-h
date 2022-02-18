@@ -1,0 +1,19 @@
+- content_for :title do
+  .prepend-top
+    .left
+      %h1.inset-type.left
+        = @video.name
+      %img.left{:alt => "Pick your tool", :src => "#{asset_path('arrow.png')}"}
+    .right
+      %h2.left.inset-type
+        %span.blue #Video
+        BLAST
+      %img.left.out{:alt => "Video BLASOUT", :src => "#{asset_path('video-logo.png')}"}
+
+- content_for :content_body do
+  .span-23.box
+    #video-player
+      = render 'nimbb_video', :video => @video, :width => 500, :height => 500
+    :javascript
+      $(function() { $('html,body').animate({scrollTop: $('#video-player').offset().top - 85}, 'slow'); });
+

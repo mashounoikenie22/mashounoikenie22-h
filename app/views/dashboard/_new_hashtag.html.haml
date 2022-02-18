@@ -1,0 +1,11 @@
+%ul#new-mashout-hashtag-container.left
+  %li
+    %input#new-mashout-hashtag-text.left{:type => 'text', :value => new_hashtag.tag}
+  %li.actions
+    %a#new-mashout-hashtag-confirm.left.confirm{:href => '#'}
+      %span.icon
+    %a#new-mashout-hashtag-cancel.left.cancel{:href => '#'}
+      %span.icon
+  %p.left.clear
+    = new_hashtag.errors.full_messages.to_sentence
+

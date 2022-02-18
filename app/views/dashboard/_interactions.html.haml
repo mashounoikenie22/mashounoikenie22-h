@@ -1,0 +1,23 @@
+#interactions.left
+  %span.title Interactions
+  #list-interactions
+    - if defined? @interactions and @interactions.count > 0
+      %table
+        %tbody
+          %tr
+            %th Name
+            %th Count
+            %th Picture
+          - @interactions.each do |interaction|
+            %tr
+              %td= interaction[:screen_name]
+              %td= interaction[:count]
+              %td
+                - if interaction[:profile_image_url].present?
+                  = image_tag interaction[:profile_image_url], :width => 32, :height => 32, :alt => 'avatar'
+    - else
+      %em You currently have no interactions
+  = will_paginate @interactions, :previous_label => "Previous", :next_label => "Next", :inner_window => 0, :outer_window => -1
+  :javascript
+    $(function() { ajaxifyPagination("#interactions", "#{dashboard_interactions_url}"); });
+

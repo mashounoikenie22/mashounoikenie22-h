@@ -1,0 +1,31 @@
+.span-15.box
+  .left.list
+    %span.number.left.clear= "#{item_number}."
+    %span.list-item
+      %span
+        Add a
+        = succeed "?" do
+          %span.orange Comment
+        (or
+        = "#{item_number + 1})"
+  #mashout-comment-wrapper
+    .help.clear
+      %span.icon
+      %p.message Pick a refab comment from the list:
+    #mashout-comment-container.span-9.left.ui-combobox
+      %select{:id => 'mashout-comment', :name => 'mashout-comment', :style => "display: none;"}
+        %option{:value => 'NONE'} None
+        %option{:value => "#{URI.encode('#YouMakeMeFeelLikeACeleb!')}"} #YouMakeMeFeelLikeACeleb!
+        %option{:value => "#{URI.encode('#Positive #Energy #RightBackAtcha!')}"} #Positive #Energy #RightBackAtcha!
+        %option{:value => "#{URI.encode('#Positive #Social #Amplification!')}"} #Positive #Social #Amplification!
+        %option{:value => "#{URI.encode('#YoureTheBest!')}"} #YoureTheBest!
+        %option{:value => "#{URI.encode('#YouTotallyRock!')}"} #YouTotallyRock!
+        %option{:value => "#{URI.encode('#Lovin what you are doing on #Twitter!')}"} #Lovin what you are doing on #Twitter!
+        %option{:value => "#{URI.encode('#ImYourBiggestFan!')}"} #ImYourBiggestFan!
+        %option{:value => "#{URI.encode('Hit that #Follow Button! I promise it\'s worth it!')}"} Hit that #Follow Button! I promise it&#39;s worth it!
+        %option{:value => "#{URI.encode('My #SocialMedia #Bestie! #LoveYa!')}"} My #SocialMedia #Bestie! #LoveYa!
+      %input{:id => 'hidden-comment', :type => 'hidden', :value => ''}
+      :javascript
+        $(function() { bindDynamicPreviewAutoCompleteSelectAndHandle('#mashout-comment-container', '#mashout-comment', '#hidden-comment', '#out-preview'); });
+    %hr.space/
+

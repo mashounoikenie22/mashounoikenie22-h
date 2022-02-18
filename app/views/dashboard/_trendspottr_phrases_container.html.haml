@@ -1,0 +1,5 @@
+= render :partial => 'trendspottr_header', :locals => { :trend_type => 'Phrases' }
+%ul.left
+  = render :partial => 'trendspottr_phrase', :collection => trends, :as => 'trend'
+%hr.space
+

@@ -1,0 +1,3 @@
+class Shoutout < Out
+end
+

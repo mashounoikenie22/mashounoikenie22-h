@@ -1,0 +1,19 @@
+%hr.space
+%strong
+  %em Search Results
+%hr.space
+- if @trends.any?
+  %input{:id => 'hidden-trendspottr-trends', :type => :hidden}
+  %input{:id => 'hidden-trendspottr-targets', :type => :hidden}
+  - @trends.group_by { |trend| trend[:type] }.each do |trend_type, trends|
+    - if trend_type == 'links'
+      = render :partial => 'trendspottr_links_container', :locals => { :trends => trends }
+    - elsif trend_type == 'phrases'
+      = render :partial => 'trendspottr_phrases_container', :locals => { :trends => trends }
+    - elsif trend_type == 'sources'
+      = render :partial => 'trendspottr_sources_container', :locals => { :trends => trends }
+    - else
+      = render :partial => 'trendspottr_hashtags_container', :locals => { :trends => trends }
+- else
+  No results.
+

@@ -1,0 +1,4 @@
+= render :partial => 'trendspottr_header', :locals => { :trend_type => 'Sources' }
+%ul.left
+  = render :partial => 'trendspottr_source', :collection => trends, :as => 'trend'
+

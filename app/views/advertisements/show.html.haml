@@ -1,0 +1,8 @@
+#advertisement
+  = image_tag @advertisement.image_path, :width => '483', :height => '432'
+  = form_for @advertisement_email, :html => { :id => 'email-form' } do |f|
+    = f.hidden_field :advertisement_id
+    = f.label :email, :style => 'min-width:0px; width:40px; height:22px; line-height: 2.2em; margin: 6px 1px 6px 1px; padding: 1px 0 1px 0;'
+    = f.text_field :email, :placeholder => 'Enter your email address', :style => "height: 22px; width:352px;"
+    = f.submit 'Enter Now!'
+  #error.hidden

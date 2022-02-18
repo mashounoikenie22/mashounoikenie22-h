@@ -1,0 +1,7 @@
+%input{:id => 'out', :name => 'out', :value => '', :type => 'hidden'}
+= render 'hidden_network_fields'
+:javascript
+  $(function() {
+    bindSendButtonClick('#send-out', '#out-preview', '#out', '#mashout-form');
+    bindAjaxSubmitAndFlash('#mashout-form', '#send-out', '#mashout-chars-left-container')
+  });

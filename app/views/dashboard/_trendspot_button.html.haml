@@ -1,0 +1,4 @@
+%input{:id => "#{checkbox_id}-submit", :type => 'image', :class => 'search', :value => '', :title => 'TrendSpot', :src => asset_path('search.png')}
+:javascript
+  $(function() { bindTrendSpotButtonForCheckbox("##{checkbox_id}") })
+

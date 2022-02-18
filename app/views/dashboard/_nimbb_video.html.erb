@@ -1,0 +1,19 @@
+<%- width = '80' if width.blank? %>
+<%- height = '80' if height.blank? %>
+
+<object class='left'
+        classid=clsid:D27CDB6E-AE6D-11cf-96B8-444553540000
+        width=<%= width %>
+        height=<%= height %>
+        codebase="http://fpdownload.macromedia.com/get/flashplayer/current/swflash.cab">
+<param name="wmode" value="opaque">
+<param name="movie"
+       value="http://player.nimbb.com/nimbb.swf?guid=<%= video.guid %>"
+       logoimageurl="<%= root_url + asset_path('video-logo-small.png') %>&logoclickurl=<%= root_url %>&key=b47ef629cb&lang=en"/>
+<embed wmode="opaque" src="http://player.nimbb.com/nimbb.swf?guid=<%= video.guid %>&logoimageurl=<%= root_url + asset_path('video-logo-small.png') %>&logoclickurl=<%= root_url %>&key=b47ef629cb&lang=en"
+       width=<%= width %>
+       height=<%= height %>
+       allowScriptAccess="always"
+       pluginspage="http://www.adobe.com/go/getflashplayer"></embed>
+</object>
+

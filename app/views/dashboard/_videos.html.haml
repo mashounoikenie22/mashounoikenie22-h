@@ -1,0 +1,19 @@
+#videos.clear
+  - if @videos.present? and @videos.count > 0
+    %ul
+      - @videos.each do |video|
+        %li
+          = render 'video', :video => video
+    %input{:id => 'hidden-video', :type => 'hidden', :value => "#{@video_url}"}
+    = will_paginate @videos, :previous_label => "Previous", :next_label => "Next", :inner_window => 0, :outer_window => -1
+    :javascript
+      $(function() { ajaxifyPagination("#videos", "#{dashboard_videos_path}", "#{@tool}"); });
+    - if defined? @guid and @guid.present?
+      :javascript
+        $(function() { $("#video-#{@guid}").prop('checked', true); });
+    - if defined? @video_url and @video_url.present?
+      :javascript
+        $(function() { $("#out-preview").val("#{@video_url}"); });
+  - else
+    %em You currently have no Mashoutable Videos
+

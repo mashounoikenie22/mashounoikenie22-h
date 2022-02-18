@@ -1,0 +1,37 @@
+/ sidebar
+#sidebar.right
+  / floating sidebar
+  #ready-to-mashout
+    .content
+      %span.title.left.orange.inset-type
+        Ready to MASHOUT?
+      #quote
+        .top
+        .body
+          .box
+            %p#mashout-chars-left-container
+              %span#mashout-chars-left
+                140
+              Characters Remaining
+            .clear.left
+              = form_tag form_path do
+                %textarea#out-preview{:maxlength => '140', :name => 'out'}
+                  = @out
+                .left.network-toggle
+                  = render 'twitter_network_button'
+                  = render 'facebook_network_button'
+                  - if params[:action] == 'blastout'
+                    = render 'youtube_network_button'
+                .right
+                  %input.button{:id => 'send-out', :type => "submit", :value => "Send"}
+                  %input.button{:id => 'preview-clear-out', :type => "submit", :value => "Clear"}
+                - if params[:action] == 'blastout'
+                  %em.clear.left.span-7{:id => 'youtube-help'} *Click youtube to play video in your content
+                  - if @networks[:youtube].present?
+                    :javascript
+                      $(function() { $('#youtube-help').toggle(); });
+        .bottom
+  :javascript
+    $(function() { bindCaptureOutPreviewVideoLink('#preview-out', '#out-preview', '#hidden-video'); });
+    $(function() { bindMashoutClearPreviewClick(); });
+

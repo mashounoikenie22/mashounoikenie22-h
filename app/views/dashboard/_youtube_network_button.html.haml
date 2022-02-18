@@ -1,0 +1,20 @@
+- if @networks[:youtube].blank?
+  %a{:id => 'youtube-auth-button', :href => '#youtube-auth'}
+    %input.left{:id => 'toggle-youtube', :value => '', :type => 'submit'}
+  %div{:style => 'display:none;'}
+    #youtube-auth
+      - if defined? oops and oops == false
+        Just this once you'll need to
+      - else
+        Oops, just this once you'll need to
+      %a{:href => youtube_auth_url}
+        %span.prepend-top#sign-in-youtube
+  :javascript
+    $(function() { $('#youtube-auth-button').fancybox(); });
+- else
+  %input.left{:id => 'toggle-youtube', :value => '', :type => 'submit'}
+  :javascript
+    $(function() { enableNetworkButton('#toggle-youtube', true); });
+    $(function() { bindNetworkToggleButton('#toggle-youtube', '#mashout-network-youtube'); });
+    $(function() { bindYouTubeHelpText('#toggle-youtube', '#youtube-help'); });
+

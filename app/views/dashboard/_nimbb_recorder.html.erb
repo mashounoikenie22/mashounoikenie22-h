@@ -1,0 +1,41 @@
+<object id="nimbb"
+        classid="clsid:D27CDB6E-AE6D-11cf-96B8-444553540000"
+        width="320"
+        height="240"
+        codebase= "http://fpdownload.macromedia.com/get/flashplayer/current/swflash.cab">
+<param name="movie"
+       value="http://player.nimbb.com/nimbb.swf?recordlength=60&amp;mode=record&amp;simplepage=1&amp;logoimageurl=<%= root_url + asset_path('video-logo.png') %>&amp;key=b47ef629cb&amp;redirecturl=/dashboard/blastout" />
+<param name="allowScriptAccess" value="always" />
+<param name="allowFullScreen" value="true" />
+<param name="wmode" value="opaque">
+<embed name="nimbb"
+       src="http://player.nimbb.com/nimbb.swf?recordlength=60&amp;mode=record&amp;simplepage=1&amp;logoimageurl=<%= root_url + asset_path('video-logo.png') %>&amp;key=b47ef629cb&amp;redirecturl=/dashboard/blastout"
+       width="320"
+       height="240"
+       wmode="opaque"
+       allowScriptAccess="always"
+       allowFullScreen="true"
+       pluginspage="http://www.adobe.com/go/getflashplayer"
+       type="application/x-shockwave-flash" />
+</object>
+<script type='text/javascript'>
+    // TODO: refactor into external javascript file
+    //<![CDATA[
+    var _Nimbb_state;
+
+    function Nimbb_recordingStopped(idPlayer) {
+        if(!recorder.isReadOnly()) {
+            document[idPlayer].saveVideo();
+        }
+    }
+
+    function Nimbb_stateChanged(idPlayer, state) {
+        if(_Nimbb_state == 'recording' && state == 'ready') {
+            document[idPlayer].saveVideo();
+        }
+
+        _Nimbb_state = state;
+    }
+    //]]>
+</script>
+

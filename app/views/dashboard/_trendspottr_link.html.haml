@@ -1,0 +1,9 @@
+- id = "mashout-trend-links-#{trend_counter}"
+%li.left.trendspottr-link
+  %div.trendspottr-thumbnail-container
+    = link_to(image_tag("http://875.pagepeeker.com/thumbs.php?size=z&wait=60&url=#{trend[:name]}"), trend[:name], :class => 'fancybox iframe')
+  %input{:id => id, :name => "mashout-trendspottr-trends[]", :type => "checkbox", :value => "#{URI.encode(trend[:value])}"}
+  %label{:for => id}
+    = trend[:name] << sprintf(" (%.2f)",trend[:weight])
+  :javascript
+    $(function() { bindDynamicPreviewCheckboxClick("##{id}", '#hidden-trendspottr-trends', '#out-preview'); })
